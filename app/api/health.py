@@ -1,23 +1,14 @@
-import shutil
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, Request
+from app.utils.health_check import check_required_tools
 
 router = APIRouter()
-
-# List of allowed server IPs
-
 
 @router.get("/health")
 async def health_check(request: Request):
     """
     Health check endpoint to ensure ffmpeg is installed and the service is running.
     """
-    # Check if the client's IP is in the allowed list
-    public_ip = request.client.host
+    # Check if ffmpeg is installed
+    check_required_tools(["ffmpeg", 'yt-dlp'])
 
-    
-    ffmpeg_path = shutil.which("ffmpeg")
-    
-    if ffmpeg_path is None:
-        raise HTTPException(status_code=500, detail="ffmpeg is not installed")
-    
-    return {"status": "ok"}
+    return {"status": "healthy"}
