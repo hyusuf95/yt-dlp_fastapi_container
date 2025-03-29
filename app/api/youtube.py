@@ -2,11 +2,7 @@ from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 from app.services.youtube_service import download_video
 from app.services.s3_service import upload_file_to_bucket
-
 router = APIRouter()
-
-# List of allowed server IPs
-ALLOWED_SERVER_IPS = ["192.168.1.100", "192.168.1.101"]
 
 # Input Model for YouTube Video URL
 class VideoRequest(BaseModel):
@@ -19,10 +15,6 @@ async def convert_video(request: Request, video_request: VideoRequest):
     """
     Converts a YouTube video to MP3 format and uploads it to an S3-compatible storage service.
     """
-    # Check if the client's IP is in the allowed list
-    client_ip = request.client.host
-    if client_ip not in ALLOWED_SERVER_IPS:
-        raise HTTPException(status_code=403, detail="Forbidden: Access is restricted to specific servers.")
 
     try:
         # Step 1: Download the YouTube video and convert it to MP3

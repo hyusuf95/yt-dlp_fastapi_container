@@ -18,8 +18,6 @@ ALLOWED_IPV6 = set(os.getenv("ALLOWED_IPV6", "").split(","))
 
 @app.middleware("http")
 async def restrict_to_public_ip(request: Request, call_next):
-    print(f"Allowed IPv4: {ALLOWED_IPV4}")
-    print(f"Allowed IPv6: {ALLOWED_IPV6}")
     client_ip = request.headers.get("X-Forwarded-For", request.client.host)
 
     # Allow if the IP is in either the IPv4 or IPv6 allowed lists

@@ -1,0 +1,7 @@
+services:
+  ytdlp:
+    build: .
+    container_name: ytdlp
+    ports:
+      - "8080:80"
+    
