@@ -1,0 +1,4 @@
+fastapi[standard]
+yt-dlp
+dotenv
+boto3
