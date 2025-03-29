@@ -6,6 +6,8 @@ services:
       - "8080:80"
     networks:
       - main_network
+    volumes:
+      - ./.env:/code/.env
 
 networks:
   main_network:
