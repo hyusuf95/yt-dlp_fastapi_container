@@ -52,6 +52,9 @@ def upload_file_to_bucket(file_path: str, subfolder: str) -> str:
         # Upload the file to the specified S3 bucket
         with open(file_path, "rb") as file_data:
             s3_client.upload_fileobj(file_data, bucket_name, object_name)
+
+        #delete the local file after upload
+        os.remove(file_path)
         
         # Generate a public URL for the uploaded file
         return f"{endpoint_url}/{bucket_name}/{object_name}"
